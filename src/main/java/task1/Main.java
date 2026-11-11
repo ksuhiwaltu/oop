@@ -2,6 +2,7 @@ package task1;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите действие: ");
+        System.out.println("Выберите действие: ");
         System.out.println("1. Подсчет рабочих дней и часов за месяц;");
         System.out.println("2. Подсчет рабочих дней и часов квартал;");
         System.out.println("3. Подсчет рабочих дней и часов за год;");
@@ -22,7 +23,29 @@ public class Main {
         System.out.println("Введите номер года: ");
         int year = scanner.nextInt();
 
-        ProdCalendar calendar = new ProdCalendar(year, Holiday.getHolidaysForYear(year), List.of());
+        List<Vacation> vacations = new ArrayList<>();
+        System.out.println("Введите количество отпусков за год: ");
+        int vacationsCount = scanner.nextInt();
+
+        for (int i = 0; i < vacationsCount; i++) {
+            System.out.println("Введите месяц начала отпуска: ");
+            int startMonth = scanner.nextInt();
+            System.out.println("Введите день начала отпуска: ");
+            int startDay = scanner.nextInt();
+            System.out.println("Введите месяц окончания отпуска: ");
+            int endMonth = scanner.nextInt();
+            System.out.println("Введите день окончания отпуска: ");
+            int endDay = scanner.nextInt();
+
+            LocalDate startDate = LocalDate.of(year, startMonth, startDay);
+            LocalDate endDate = LocalDate.of(year, endMonth, endDay);
+
+            vacations.add(new Vacation(startDate, endDate));
+        }
+
+
+
+        ProdCalendar calendar = new ProdCalendar(year, Holiday.getHolidaysForYear(year), vacations);
 
         if(choice == 1) {
 
