@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * @param startDate начальная дата отпуска
  * @param endDate конечная дата отпуска
  */
-public record Vacation(LocalDate startDate, LocalDate endDate) {
+public record Vacation(LocalDate startDate, LocalDate endDate) implements CalendarRule {
 
     public Vacation {
         if (startDate == null) {
@@ -22,6 +22,16 @@ public record Vacation(LocalDate startDate, LocalDate endDate) {
         if (endDate.isBefore(startDate)) {
             throw new IllegalArgumentException("Дата окончания отпуска не может быть раньше даты начала");
         }
+    }
+
+    @Override
+    public boolean appliesTo(LocalDate date) {
+        return contains(date);
+    }
+
+    @Override
+    public DayType getDayType() {
+        return DayType.VACATION;
     }
 
     /**
