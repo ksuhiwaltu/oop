@@ -22,18 +22,34 @@ public record Holiday(LocalDate date, String name, boolean transferable) impleme
         }
     }
 
+    /**
+     * Проверка на совпадение указанной даты с датой праздника
+     *
+     * @param date проверяемая дата
+     * @return true, если эта дата - праздник
+     */
     @Override
     public boolean appliesTo(LocalDate date) {
         return this.date.equals(date);
     }
 
+    /**
+     * Возвращает тип дня для праздника
+     *
+     * @return HOLIDAY
+     */
     @Override
     public DayType getDayType() {
         return DayType.HOLIDAY;
     }
 
 
-
+    /**
+     * Возвращает список праздничных дней для указанного года
+     *
+     * @param year год, для которого формируется список праздников
+     * @return список праздников
+     */
     public static List<Holiday> getHolidaysForYear(int year) {
 
         List<Holiday> holidays = new ArrayList<>();
