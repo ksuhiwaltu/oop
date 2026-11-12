@@ -3,6 +3,7 @@ package task1;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class ProdCalendar {
     private final int year;
     private final List<Holiday> holidays;
     private final List<Vacation> vacations;
+    private final List<CalendarRule> rules;
 
     /**
      * Создаёт производственный календарь.
@@ -29,6 +31,12 @@ public class ProdCalendar {
         this.year = year;
         this.holidays = List.copyOf(holidays);
         this.vacations = List.copyOf(vacations);
+
+        List<CalendarRule> rules = new ArrayList<>();
+        rules.addAll(this.holidays);
+        rules.addAll(this.vacations);
+
+        this.rules = List.copyOf(rules);
     }
 
     public int getYear() {
@@ -55,9 +63,9 @@ public class ProdCalendar {
                     "Дата не относится к году данного календаря");
         }
 
-        for (Holiday holiday : holidays) {
-            if (holiday.date().equals(date)) {
-                return DayType.HOLIDAY;
+        for (CalendarRule rule : rules) {
+            if (rule.getDayType() == DayType.HOLIDAY && rule.appliesTo(date)) {
+                return rule.getDayType();
             }
         }
 
@@ -68,14 +76,15 @@ public class ProdCalendar {
             return DayType.WEEKEND;
         }
 
-        for (Vacation vacation : vacations) {
-            if (vacation.contains(date)) {
-                return DayType.VACATION;
+        for (CalendarRule rule : vacations) {
+            if (rule.getDayType() == DayType.VACATION && rule.appliesTo(date)) {
+                return rule.getDayType();
             }
         }
 
-        for (Holiday holiday : holidays) {
-            if (holiday.date().equals(date.plusDays(1))) {
+        for (CalendarRule rule : rules) {
+            if (rule.getDayType() == DayType.HOLIDAY
+                    && rule.appliesTo(date.plusDays(1))) {
                 return DayType.SHORTENED_WORKDAY;
             }
         }
