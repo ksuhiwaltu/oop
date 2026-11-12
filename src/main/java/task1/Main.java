@@ -1,5 +1,6 @@
 package task1;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -85,10 +86,18 @@ public class Main {
             System.out.println("Введите день: ");
             int dayNumber = scanner.nextInt();
 
-            LocalDate date = LocalDate.of(year, monthNumber, dayNumber);
+            try {
+                LocalDate date = LocalDate.of(year, monthNumber, dayNumber);
 
-            DayType dayType = calendar.getDayType(date);
-            System.out.println("Тип указанной даты: " + dayType);
+                DayType dayType = calendar.getDayType(date);
+                System.out.println("Тип указанной даты: " + dayType);
+
+            } catch (DateTimeException e) {
+                System.out.println("Ошибка: введённой даты не существует!");
+
+            } catch (CalendarRuleException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
 
         } else if (choice == 5) {
             for (Holiday holiday : calendar.getHolidays()) {
