@@ -154,4 +154,14 @@ public class CalendarTest {
         assertEquals(19, calendar.getWorkingDaysInMonth(3));
         assertEquals(152, calendar.getWorkingHoursInMonth(3));
     }
+
+    @Test
+    void shouldThrowCalendarRuleException() {
+        ProdCalendar calendar = new ProdCalendar(2026, List.of(), List.of());
+
+        LocalDate date = LocalDate.of(2027, 3, 15);
+
+        CalendarRuleException exception = assertThrows(CalendarRuleException.class,() -> calendar.getDayType(date));
+        assertEquals("Дата не относится к году данного календаря", exception.getMessage());
+    }
 }
