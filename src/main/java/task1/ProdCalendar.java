@@ -39,10 +39,11 @@ public class ProdCalendar {
         this.rules = List.copyOf(rules);
     }
 
-    public int getYear() {
-        return year;
-    }
-
+    /**
+     * Возвращает список праздников календаря
+     *
+     * @return список праздников
+     */
     public List<Holiday> getHolidays() {
         return holidays;
     }
@@ -52,6 +53,8 @@ public class ProdCalendar {
      *
      * @param date проверяемая дата
      * @return тип дня
+     * @throws IllegalArgumentException если дата равна null
+     * @throws CalendarRuleException если дата относится к другому году
      */
     public DayType getDayType(LocalDate date) {
         if (date == null) {
