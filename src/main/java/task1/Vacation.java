@@ -24,11 +24,22 @@ public record Vacation(LocalDate startDate, LocalDate endDate) implements Calend
         }
     }
 
+    /**
+     * Проверка на попадание указанной даты в период отпуска
+     *
+     * @param date проверяемая дата
+     * @return true, если эта дата входит в период отпуска
+     */
     @Override
     public boolean appliesTo(LocalDate date) {
         return contains(date);
     }
 
+    /**
+     * Возвращает тип дня для отпуска
+     *
+     * @return VACATION
+     */
     @Override
     public DayType getDayType() {
         return DayType.VACATION;
@@ -39,7 +50,7 @@ public record Vacation(LocalDate startDate, LocalDate endDate) implements Calend
      *
      * @param date конкретная дата
      *
-     * @return проверку вхождения конкретной даты в сроки отпуска
+     * @return true, если дата попадает в период отпуска
      */
     public boolean contains(LocalDate date) {
 
