@@ -164,4 +164,18 @@ public class CalendarTest {
         CalendarRuleException exception = assertThrows(CalendarRuleException.class,() -> calendar.getDayType(date));
         assertEquals("Дата не относится к году данного календаря", exception.getMessage());
     }
+
+    @Test
+    void shouldFollowEqualsAndHashCodeContract() {
+        Holiday first = new Holiday(
+                LocalDate.of(2026, 1, 1), "Новый год", false
+        );
+
+        Holiday second = new Holiday(
+                LocalDate.of(2026, 1, 1), "Новый год", false
+        );
+
+        assertEquals(first, second);
+        assertEquals(first.hashCode(), second.hashCode());
+    }
 }
