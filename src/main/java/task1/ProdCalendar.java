@@ -59,8 +59,7 @@ public class ProdCalendar {
         }
 
         if (date.getYear() != year) {
-            throw new IllegalArgumentException(
-                    "Дата не относится к году данного календаря");
+            throw new CalendarRuleException("Дата не относится к году данного календаря");
         }
 
         for (CalendarRule rule : rules) {
