@@ -11,7 +11,7 @@ import java.util.List;
  * @param name название праздника
  * @param transferable можно ли перенести выходной
  */
-public record Holiday(LocalDate date, String name, boolean transferable) {
+public record Holiday(LocalDate date, String name, boolean transferable) implements CalendarRule {
 
     public Holiday {
         if (date == null) {
@@ -21,6 +21,18 @@ public record Holiday(LocalDate date, String name, boolean transferable) {
             throw new IllegalArgumentException("Имя праздника не может быть пустым");
         }
     }
+
+    @Override
+    public boolean appliesTo(LocalDate date) {
+        return this.date.equals(date);
+    }
+
+    @Override
+    public DayType getDayType() {
+        return DayType.HOLIDAY;
+    }
+
+
 
     public static List<Holiday> getHolidaysForYear(int year) {
 
